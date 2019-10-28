@@ -30,7 +30,7 @@
             <button ion-button item-left outline *ngIf="!checkValue(100)" value="100" (click)="setValue(100)">100.00</button>
             <button ion-button item-left *ngIf="checkValue(100)" (click)="setValue(100)">100.00</button>
             <ion-item>
-              <ion-input placeholder="or enter a value" [(ngModel)]="transaction.value"></ion-input>
+              <ion-input placeholder="or enter a value" type="number" [(ngModel)]="transaction.value"></ion-input>
             </ion-item>
           </ion-row>
         </ion-list>
