@@ -29,6 +29,10 @@ export class TopuplandingPage {
     console.log('ionViewDidLoad TopuplandingPage');
   }
 
+  ionViewDidEnter() {
+    this.transaction = {};
+  }
+
   goAuto()
   {
     this.common.showToast("Navigating to AutoPayPage");

@@ -43,6 +43,7 @@ export class HomePage {
   quickPay()
   {
     this.transaction.method = "cc";
+    this.transaction.sign = "+";
     this.transaction.provider = this.user.card;
     let user = this.user;
     let transaction = this.transaction;
