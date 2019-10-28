@@ -25,6 +25,11 @@ export class CommonProvider {
   {
   }
 
+  fixTwo(num)
+  {
+    return parseInt(num).toFixed(2);
+  }
+
   sumAll(arr, prop)
   {
       return arr.reduce((a, b) => parseInt(a) + parseInt((b[prop] || 0)), 0);

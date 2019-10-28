@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { CommonProvider } from '../../providers/common/common';
 
 /**
  * Generated class for the TopupPage page.
@@ -16,26 +17,57 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class TopupPage {
 
   //UI display variable
-  selected: boolean = true;
-  // selected: boolean = false;
+  // selected: boolean = true;
+  selected: boolean = false;
+  mode: any = "ob";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  //passed variable
+  user: any;
+  transaction: any;
+
+  constructor(public common: CommonProvider, public navCtrl: NavController, public navParams: NavParams) {
+    this.user = this.navParams.get('user');
+    this.transaction = this.navParams.get('transaction');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TopupPage');
   }
 
-  goSuccess()
+  fixTwo(needle)
   {
-    this.navCtrl.push("SuccessfulPage");
-    // this.navCtrl.push("UnsuccessfulPage");
+    return this.common.fixTwo(needle);
   }
 
-  goTopupbank()
+  checkValue(needle)
   {
-    // this.navCtrl.push("TopupcardPage");
-    // this.navCtrl.push("TopupbankPage");
+    if(this.transaction.value == needle)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+  setValue(needle)
+  {
+    this.transaction.value = needle;
+  }
+
+  goSuccess()
+  {
+    let user = this.user;
+    let transaction = this.transaction;
+    this.navCtrl.push("SuccessfulPage", { user, transaction });
+  }
+
+  goTopuplist()
+  {
+    let user = this.user;
+    let transaction = this.transaction;
+    this.navCtrl.push("TopuplistPage", { user, transaction });
   }
 
 }

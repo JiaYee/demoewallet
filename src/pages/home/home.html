@@ -14,11 +14,11 @@
   <div class="balance">
     <ion-row>
       <div class="balance-box">
-        <h1><ion-badge color="light">MYR</ion-badge>30.00</h1>
+        <h1><ion-badge color="light">MYR</ion-badge>{{ fixTwo(user.balance )}}</h1>
       </div>
     </ion-row>
     <ion-row>
-      <div class="balance-box">
+      <div class="balance-box" (click)="goAddP()">
         <p>Add Payment Method ></p>
         <img src="assets/imgs/cardlist.png"/>
       </div>
@@ -45,36 +45,40 @@
         </ion-row>
       </ion-card>
     </ion-row>
-    <ion-row>
+    <ion-row *ngIf="user.card">
       <ion-card padding>
         <p>QUICK ACCESS</p>
         <ion-row>
           <ion-col>
-            <img src="assets/imgs/iconvisa.png"/>
+            <img [src]="user.card.icon"/>
           </ion-col>
           <ion-col>
             <ion-item>
-              <p>**** **** **** 1278</p>
+              <p>{{ maskThis(user.card.number) }}</p>
               <br>
-              <p>Valid Thru 07/23</p>
+              <p>Valid Thru {{ user.card.expiry }}</p>
             </ion-item>
           </ion-col>
         </ion-row>
         <ion-row>
-          <button ion-button item-left outline>20.00</button>
-          <button ion-button item-left outline>50.00</button>
-          <button ion-button item-left>Confirm</button>
+          <button ion-button item-left outline *ngIf="!checkValue(20)" value="20" (click)="setValue(20)">20.00</button>
+          <button ion-button item-left *ngIf="checkValue(20)" (click)="setValue(20)">20.00</button>
+          <button ion-button item-left outline *ngIf="!checkValue(50)" value="50" (click)="setValue(50)">50.00</button>
+          <button ion-button item-left *ngIf="checkValue(50)" (click)="setValue(50)">50.00</button>
+          <button ion-button item-left [disabled]="!transaction.value" (click)="quickPay()">Confirm</button>
         </ion-row>
       </ion-card>
     </ion-row>
     <ion-row>
       <ion-card padding>
         <p>RECENT ACTIVITY</p>
-        <button ion-item>
+        <button ion-item *ngFor="let transaction of user.transactions">
+          <ion-badge color="dark" item-left>{{ transaction.provider.name }}</ion-badge>
           Top Up
-          <ion-badge item-right>+20.00</ion-badge>
+          <ion-badge item-right>{{ transaction.sign }}RM{{ fixTwo(transaction.value) }}</ion-badge>
         </button>
-          <button ion-button clear full>SEE MORE</button>
+        <button ion-item *ngIf="user.transactions.length == 0">No transactions yet.</button>
+        <button ion-button clear full *ngIf="user.transactions.length > 0" (click)="goSMore()">SEE MORE</button>
       </ion-card>
     </ion-row>
   </div>

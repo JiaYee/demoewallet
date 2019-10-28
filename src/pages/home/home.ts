@@ -16,16 +16,83 @@ import { CommonProvider } from '../../providers/common/common';
 })
 export class HomePage {
 
+  //object variable
+  user: any = {};
+  transaction: any = {};
+
   constructor(public common: CommonProvider, public navCtrl: NavController, public navParams: NavParams) {
+    this.user.balance = 0;
+    this.user.transactions = [];
   }
 
-  ionViewDidLoad()
+  ionViewDidEnter()
   {
+    this.transaction = {};
+  }
+
+  goAddP()
+  {
+    this.common.showToast("Navigating to AddPaymentPage");
+  }
+
+  goSMore()
+  {
+    this.common.showToast("Navigating to SeeMorePage");
+  }
+
+  quickPay()
+  {
+    this.transaction.method = "cc";
+    this.transaction.provider = this.user.card;
+    let user = this.user;
+    let transaction = this.transaction;
+    this.navCtrl.push("SuccessfulPage", { user, transaction });
+  }
+
+  checkValue(needle)
+  {
+    if(this.transaction.value == needle)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+  setValue(needle)
+  {
+    this.transaction.value = needle;
+  }
+
+  maskThis(n)
+  {
+    if(n.length > 3)
+    {
+      let needle = n.length-4;
+      let haystack = n.substring(needle, n.length);
+      let newn = "**** **** **** " + haystack;
+      return newn;
+    }
+    else
+    {
+      let newn = "**** **** **** " + n;
+      return newn;
+    }
+
+  }
+
+  fixTwo(float)
+  {
+    return this.common.fixTwo(float);
   }
 
   goTopuplanding()
   {
-    this.navCtrl.push("TopuplandingPage");
+    let user = this.user;
+    let transaction = this.transaction;
+    this.navCtrl.push("TopuplandingPage", { user, transaction });
   }
 
   goPay()

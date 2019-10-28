@@ -18,27 +18,38 @@
     </ion-row>
   </div>
   <div class="main">
-    <ion-card padding>
-      <ion-list (click)="goTopupcarddetail()">
-        <ion-item>
-          <ion-thumbnail item-start>
-            <img src="assets/imgs/iconmastercard.png">
-          </ion-thumbnail>
-          <h2>MasterCard</h2>
-        </ion-item>
-        <ion-item>
-          <ion-thumbnail item-start>
-            <img src="assets/imgs/iconvisa.png">
-          </ion-thumbnail>
-          <h2>Visa</h2>
-        </ion-item>
-        <ion-item>
-          <ion-thumbnail item-start>
-            <img src="assets/imgs/iconjcb.png">
-          </ion-thumbnail>
-          <h2>JCB</h2>
-        </ion-item>
-      </ion-list>
-    </ion-card>
+    <ion-row>
+      <ion-card padding>
+        <ion-list>
+          <ion-row>
+            <ion-label fixed><b>Card Number</b></ion-label>
+          </ion-row>
+          <ion-item>
+            <ion-icon item-left name="card"></ion-icon>
+            <ion-input></ion-input>
+          </ion-item>
+          <ion-row>
+            <ion-col>
+              <ion-label fixed><b>Expiry Date</b></ion-label>
+              <ion-item>
+                <ion-input value="11/23"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-label fixed><b>CVV</b></ion-label>
+              <ion-item>
+                <ion-input value="123"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-item>
+            <ion-label>Save my card details for future payments.</ion-label>
+            <ion-checkbox color="dark" checked="true"></ion-checkbox>
+          </ion-item>
+        </ion-list>
+        <div class="empty"></div>
+        <button ion-button block (click)="goTopup()">Submit</button>
+      </ion-card>
+    </ion-row>
   </div>
 </ion-content>

@@ -15,7 +15,7 @@
     <ion-row>
       <div class="balance-box">
         <p>Balance (RM)</p>
-        <h1>30.00</h1>
+        <h1>{{ fixTwo(user.balance) }}</h1>
       </div>
     </ion-row>
   </div>
@@ -24,13 +24,13 @@
       <ion-card padding>
         <ion-list>
           <b>Top Up Through</b>
-          <button ion-item (click)="goTopup()">Online Banking</button>
-          <button ion-item (click)="goTopup()">Credit / Debit Card</button>
+          <button ion-item (click)="goTopup('ob')">Online Banking</button>
+          <button ion-item (click)="goTopup('cc')">Credit / Debit Card</button>
         </ion-list>
       </ion-card>
       <ion-card padding>
         <ion-list>
-          <button ion-item>
+          <button ion-item (click)="goAuto()">
             Auto Top-Up
             <ion-badge item-right color="dark">Inactive</ion-badge>
           </button>

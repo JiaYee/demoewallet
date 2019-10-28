@@ -23,11 +23,14 @@
         <ion-list>
           <b>1. Select a top-up value (RM)</b>
           <ion-row>
-            <button ion-button item-left outline>20.00</button>
-            <button ion-button item-left outline>50.00</button>
-            <button ion-button item-left outline>100.00</button>
+            <button ion-button item-left outline *ngIf="!checkValue(20)" value="20" (click)="setValue(20)">20.00</button>
+            <button ion-button item-left *ngIf="checkValue(20)" (click)="setValue(20)">20.00</button>
+            <button ion-button item-left outline *ngIf="!checkValue(50)" value="50" (click)="setValue(50)">50.00</button>
+            <button ion-button item-left *ngIf="checkValue(50)" (click)="setValue(50)">50.00</button>
+            <button ion-button item-left outline *ngIf="!checkValue(100)" value="100" (click)="setValue(100)">100.00</button>
+            <button ion-button item-left *ngIf="checkValue(100)" (click)="setValue(100)">100.00</button>
             <ion-item>
-              <ion-input placeholder="or enter a value"></ion-input>
+              <ion-input placeholder="or enter a value" [(ngModel)]="transaction.value"></ion-input>
             </ion-item>
           </ion-row>
         </ion-list>
@@ -35,30 +38,30 @@
       <ion-card padding>
         <ion-list>
           <b>2. Select preferred payment method</b>
-          <button *ngIf="!selected" ion-item (click)="goTopupbank()">
+          <button *ngIf="!transaction.provider" ion-item (click)="goTopuplist()">
             Select from the list
             <ion-icon name="ios-arrow-forward" item-right></ion-icon>
           </button>
-          <ion-item *ngIf="selected">
+          <ion-item *ngIf="transaction.provider" (click)="goTopuplist()">
             <ion-thumbnail item-start>
-              <img src="assets/imgs/iconmaybank.png">
+              <img [src]="transaction.provider.icon">
             </ion-thumbnail>
-            <h2>Maybank</h2>
+            <h2>{{ transaction.provider.name }}</h2>
           </ion-item>
         </ion-list>
       </ion-card>
-      <ion-card padding *ngIf="selected">
+      <ion-card padding *ngIf="transaction.provider && transaction.value">
         <ion-list>
           <b>Summary (RM)</b>
           <ion-item>
             <ion-item>
               Payment
-              <ion-badge item-right color="light">20.00</ion-badge>
+              <ion-badge item-right color="light">{{ fixTwo(transaction.value) }}</ion-badge>
             </ion-item>
           </ion-item>
         </ion-list>
       </ion-card>
     </ion-row>
-    <button *ngIf="selected" ion-button block (click)="goSuccess()">Confirm</button>
+    <button [disabled]="!(transaction.provider && transaction.value)" ion-button block (click)="goSuccess()">Confirm</button>
   </div>
 </ion-content>

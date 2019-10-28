@@ -1,0 +1,83 @@
+<!--
+  Generated template for the HomePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title *ngIf="transaction.method === 'ob'" style="text-align: center">Select a Payment Method</ion-title>
+    <ion-title *ngIf="transaction.method === 'cc'" style="text-align: center">Credit / Debit Card</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="balance">
+    <ion-row>
+      <div class="balance-box">
+      </div>
+    </ion-row>
+  </div>
+  <div class="main">
+    <ion-card padding *ngIf="transaction.method === 'ob'">
+      <ion-list radio-group>
+        <ion-item *ngFor="let bank of banks">
+          <ion-radio item-left (click)="setProvider(bank)"></ion-radio>
+          <ion-thumbnail item-start>
+            <img [src]="bank.icon">
+          </ion-thumbnail>
+          <ion-label>{{ bank.name }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+    <ion-card *ngIf="transaction.method === 'cc'" padding>
+      <ion-list radio-group>
+        <ion-item *ngFor="let card of cards">
+          <ion-radio item-left (click)="setProvider(card)"></ion-radio>
+          <ion-thumbnail item-start>
+            <img [src]="card.icon">
+          </ion-thumbnail>
+          <ion-label>{{ card.name }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+    <ion-row *ngIf="transaction.method === 'cc' && transaction.provider.name">
+      <ion-card padding>
+        <ion-list>
+          <ion-row>
+            <ion-label fixed><b>Card Number</b></ion-label>
+          </ion-row>
+          <ion-item>
+            <ion-icon item-left name="card"></ion-icon>
+            <ion-input [(ngModel)]="transaction.provider.number" type="number"></ion-input>
+          </ion-item>
+          <ion-row>
+            <ion-col>
+              <ion-label fixed><b>Expiry Date</b></ion-label>
+              <ion-item>
+                <ion-datetime displayFormat="MM/YY" pickerFormat="MM YY" min="2019" max="2029" [(ngModel)]="transaction.provider.expiry"></ion-datetime>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-label fixed><b>CVV</b></ion-label>
+              <ion-item>
+                <ion-input type="password" [(ngModel)]="transaction.provider.cvv"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-item>
+            <ion-label>Save my card details for future payments.</ion-label>
+            <ion-checkbox color="dark" checked="true" [(ngModel)]="transaction.provider.isSave"></ion-checkbox>
+          </ion-item>
+        </ion-list>
+        <div class="empty"></div>
+      </ion-card>
+    </ion-row>
+    <button ion-button block *ngIf="transaction.method === 'ob'" [disabled]="!(transaction.provider)" (click)="chooseProvider()">
+      Submit
+    </button>
+    <button ion-button block *ngIf="transaction.method === 'cc'" [disabled]="!(transaction.provider.number && transaction.provider.expiry && transaction.provider.cvv)" (click)="chooseProvider()">
+      Submit
+    </button>
+  </div>
+</ion-content>

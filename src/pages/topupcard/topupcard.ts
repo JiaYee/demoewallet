@@ -22,9 +22,4 @@ export class TopupcardPage {
     console.log('ionViewDidLoad TopupcardPage');
   }
 
-  goTopupcarddetail()
-  {
-    this.navCtrl.push("TopupcarddetailPage");
-  }
-
 }
