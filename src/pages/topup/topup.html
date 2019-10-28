@@ -1,0 +1,64 @@
+<!--
+  Generated template for the HomePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title style="text-align: center">Top-Up</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="balance">
+    <ion-row>
+      <div class="balance-box">
+      </div>
+    </ion-row>
+  </div>
+  <div class="main">
+    <ion-row>
+      <ion-card padding>
+        <ion-list>
+          <b>1. Select a top-up value (RM)</b>
+          <ion-row>
+            <button ion-button item-left outline>20.00</button>
+            <button ion-button item-left outline>50.00</button>
+            <button ion-button item-left outline>100.00</button>
+            <ion-item>
+              <ion-input placeholder="or enter a value"></ion-input>
+            </ion-item>
+          </ion-row>
+        </ion-list>
+      </ion-card>
+      <ion-card padding>
+        <ion-list>
+          <b>2. Select preferred payment method</b>
+          <button *ngIf="!selected" ion-item (click)="goTopupbank()">
+            Select from the list
+            <ion-icon name="ios-arrow-forward" item-right></ion-icon>
+          </button>
+          <ion-item *ngIf="selected">
+            <ion-thumbnail item-start>
+              <img src="assets/imgs/iconmaybank.png">
+            </ion-thumbnail>
+            <h2>Maybank</h2>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+      <ion-card padding *ngIf="selected">
+        <ion-list>
+          <b>Summary (RM)</b>
+          <ion-item>
+            <ion-item>
+              Payment
+              <ion-badge item-right color="light">20.00</ion-badge>
+            </ion-item>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+    </ion-row>
+    <button *ngIf="selected" ion-button block (click)="goSuccess()">Confirm</button>
+  </div>
+</ion-content>
