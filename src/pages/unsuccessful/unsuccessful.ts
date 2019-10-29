@@ -22,4 +22,9 @@ export class UnsuccessfulPage {
     console.log('ionViewDidLoad UnsuccessfulPage');
   }
 
+  goHome()
+  {
+    this.navCtrl.popToRoot();
+  }
+
 }

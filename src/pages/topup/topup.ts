@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, ActionSheetController, NavController, NavParams } from 'ionic-angular';
 import { CommonProvider } from '../../providers/common/common';
 
 /**
@@ -25,7 +25,7 @@ export class TopupPage {
   user: any;
   transaction: any;
 
-  constructor(public common: CommonProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public actionSheetCtrl: ActionSheetController, public common: CommonProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.user = this.navParams.get('user');
     this.transaction = this.navParams.get('transaction');
   }
@@ -54,6 +54,32 @@ export class TopupPage {
   setValue(needle)
   {
     this.transaction.value = needle;
+  }
+
+  presentAS() {
+    const actionSheet = this.actionSheetCtrl.create({
+      title: 'Navigate to...',
+      buttons: [
+        {
+          text: 'Success',
+          handler: () => {
+            this.goSuccess();
+          }
+        },
+        {
+          text: 'Failed',
+          handler: () => {
+            this.goUnsuccess();
+          }
+        },
+      ]
+    });
+    actionSheet.present();
+  }
+
+  goUnsuccess()
+  {
+    this.navCtrl.push("UnsuccessfulPage");
   }
 
   goSuccess()
